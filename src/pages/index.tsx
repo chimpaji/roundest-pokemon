@@ -1,9 +1,12 @@
+import { trpc } from '@/utils/trpc';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../styles/Home.module.css';
 
 const Home: NextPage = () => {
+  const { data, isLoading } = trpc.useQuery(['hello', { text: 'client' }]);
+  if (data) return <div>{data.greeting}</div>;
   return (
     <div className='h-screen w-screen flex flex-col justify-center text-center items-center'>
       <div className=''>Which Pokemon is the Roundest?</div>
