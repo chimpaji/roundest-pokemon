@@ -15,10 +15,19 @@ const Home: NextPage = () => {
   const [first, secound] = ids;
   const firstPokemon = trpc.useQuery(['get-pokemon-by-id', { id: first }]);
   const secoundPokemon = trpc.useQuery(['get-pokemon-by-id', { id: secound }]);
+
+  const voteMutation = trpc.useMutation(['cast-vote']);
+
+  const voteForRoundest = (selected: number) => {
+    if (selected === first) {
+      voteMutation.mutate({ votedFor: first, votedAgainst: secound });
+    } else {
+      voteMutation.mutate({ votedFor: secound, votedAgainst: first });
+    }
+    updateIds(getOptionsForVote());
+  };
   if (firstPokemon.isLoading || secoundPokemon.isLoading)
     return <div>Loading....</div>;
-
-  const voteForRoundest = (selected: number) => {};
 
   return (
     <div className='h-screen w-screen flex flex-col justify-center text-center items-center'>
@@ -63,7 +72,7 @@ const PokemonListing: React.FC<{
       <div className='text-xl text-center capitalize mt-[-2rem]'>
         {props.pokemon.name}
       </div>
-      <button className={btnClass} onClick={() => props.vote}>
+      <button className={btnClass} onClick={() => props.vote()}>
         Rounder
       </button>
     </div>
