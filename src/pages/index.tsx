@@ -73,14 +73,14 @@ const PokemonListing: React.FC<{
   return (
     <div className=''>
       <Image
-        src={props.pokemon.sprites?.front_default as string}
+        src={props.pokemon?.spriteUrl as string}
         width={256}
         height={256}
         layout='fixed'
         alt='pokemon-img'
       />
       <div className='text-xl text-center capitalize mt-[-2rem]'>
-        {props.pokemon.name}
+        {props?.pokemon?.name}
       </div>
       <button className={btnClass} onClick={() => props.vote()}>
         Rounder
