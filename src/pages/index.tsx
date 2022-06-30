@@ -20,9 +20,13 @@ const Home: NextPage = () => {
 
   const voteForRoundest = (selected: number) => {
     if (selected === first) {
-      voteMutation.mutate({ votedFor: first, votedAgainst: secound });
+      console.log({ votedForId: first, votedAgainstId: secound });
+
+      voteMutation.mutate({ votedForId: first, votedAgainstId: secound });
     } else {
-      voteMutation.mutate({ votedFor: secound, votedAgainst: first });
+      console.log({ votedForId: secound, votedAgainstId: first });
+
+      voteMutation.mutate({ votedForId: secound, votedAgainstId: first });
     }
     updateIds(getOptionsForVote());
   };
