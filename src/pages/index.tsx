@@ -9,7 +9,7 @@ import styles from '../styles/Home.module.css';
 import { inferQueryResponse } from './api/trpc/[trpc]';
 
 const btnClass =
-  'inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500';
+  'inline-flex items-center justify-center text-center p-2 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500';
 
 const Home: NextPage = () => {
   const [ids, updateIds] = useState(getOptionsForVote());
@@ -40,7 +40,7 @@ const Home: NextPage = () => {
   // const dataLoaded = false;
 
   return (
-    <div className='h-screen w-screen flex flex-col justify-between text-center items-center'>
+    <div className='h-screen w-screen flex flex-col justify-between  items-center'>
       <div className='text-2xl pt-8'>Which Pokemon is the Rounder?</div>
       {!dataLoaded && (
         <div className='flex justify-center items-center'>
@@ -48,7 +48,7 @@ const Home: NextPage = () => {
         </div>
       )}
       {dataLoaded && (
-        <div className='border rounded p-8 flex justify-between items-center max-w-2xl'>
+        <div className='border rounded p-8 flex justify-between items-center'>
           <>
             <PokemonListing
               pokemon={firstPokemon.data}
@@ -88,15 +88,15 @@ const PokemonListing: React.FC<{
   vote: () => void;
 }> = (props) => {
   return (
-    <div className=''>
+    <div className='flex flex-col'>
       <Image
         src={props.pokemon?.spriteUrl as string}
-        width={256}
-        height={256}
-        layout='fixed'
+        width={100}
+        height={100}
+        layout='intrinsic'
         alt='pokemon-img'
       />
-      <div className='text-xl text-center capitalize mt-[-2rem]'>
+      <div className='text-xl text-center capitalize mt-1'>
         {props?.pokemon?.name}
       </div>
       <button className={btnClass} onClick={() => props.vote()}>
