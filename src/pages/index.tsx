@@ -3,6 +3,7 @@ import { trpc } from '@/utils/trpc';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useState } from 'react';
 import styles from '../styles/Home.module.css';
 import { inferQueryResponse } from './api/trpc/[trpc]';
@@ -30,32 +31,44 @@ const Home: NextPage = () => {
     }
     updateIds(getOptionsForVote());
   };
-  if (firstPokemon.isLoading || secoundPokemon.isLoading)
-    return <div>Loading....</div>;
+
+  const dataLoaded =
+    !firstPokemon.isLoading &&
+    firstPokemon.data &&
+    !secoundPokemon.isLoading &&
+    secoundPokemon.data;
+  // const dataLoaded = false;
 
   return (
-    <div className='h-screen w-screen flex flex-col justify-center text-center items-center'>
-      <div className='text-2xl'>Which Pokemon is the Rounder?</div>
-      <div className='border rounded p-8 flex justify-between items-center max-w-2xl'>
-        {!firstPokemon.isLoading &&
-          firstPokemon.data &&
-          !secoundPokemon.isLoading &&
-          secoundPokemon.data && (
-            <>
-              <PokemonListing
-                pokemon={firstPokemon.data}
-                vote={() => voteForRoundest(first)}
-              />
-              <div className='p-8'>vs</div>
-              <PokemonListing
-                pokemon={secoundPokemon.data}
-                vote={() => voteForRoundest(secound)}
-              />
-            </>
-          )}
-      </div>
+    <div className='h-screen w-screen flex flex-col justify-between text-center items-center'>
+      <div className='text-2xl pt-8'>Which Pokemon is the Rounder?</div>
+      {!dataLoaded && (
+        <div className='flex justify-center items-center'>
+          <img src='/rings.svg' alt='loading-icon' />
+        </div>
+      )}
+      {dataLoaded && (
+        <div className='border rounded p-8 flex justify-between items-center max-w-2xl'>
+          <>
+            <PokemonListing
+              pokemon={firstPokemon.data}
+              vote={() => voteForRoundest(first)}
+            />
+            <div className='p-8'>vs</div>
+            <PokemonListing
+              pokemon={secoundPokemon.data}
+              vote={() => voteForRoundest(secound)}
+            />
+          </>
+        </div>
+      )}
+      <Link href='/results'>
+        <div className='fixed bottom-8 right-8 rounded border bg-purple-600 p-2 cursor-pointer'>
+          Go to Score Board
+        </div>
+      </Link>
       <a
-        className='fixed bottom-0'
+        className=''
         target='_blank'
         rel='noreferrer'
         href='https://github.com/chimpaji/roundest-pokemon'
