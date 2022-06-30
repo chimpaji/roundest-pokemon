@@ -31,7 +31,7 @@ const Home: NextPage = () => {
 
   return (
     <div className='h-screen w-screen flex flex-col justify-center text-center items-center'>
-      <div className='text-2xl'>Which Pokemon is the Roundest?</div>
+      <div className='text-2xl'>Which Pokemon is the Rounder?</div>
       <div className='border rounded p-8 flex justify-between items-center max-w-2xl'>
         {!firstPokemon.isLoading &&
           firstPokemon.data &&
@@ -50,6 +50,14 @@ const Home: NextPage = () => {
             </>
           )}
       </div>
+      <a
+        className='fixed bottom-0'
+        target='_blank'
+        rel='noreferrer'
+        href='https://github.com/chimpaji/roundest-pokemon'
+      >
+        Github
+      </a>
     </div>
   );
 };
@@ -64,9 +72,11 @@ const PokemonListing: React.FC<{
 }> = (props) => {
   return (
     <div className=''>
-      <img
-        src={props.pokemon.sprites?.front_default || undefined}
-        className='w-full w-64 h-64 '
+      <Image
+        src={props.pokemon.sprites?.front_default as string}
+        width={256}
+        height={256}
+        layout='fixed'
         alt='pokemon-img'
       />
       <div className='text-xl text-center capitalize mt-[-2rem]'>
